@@ -3,12 +3,19 @@ version: '3.7'
 services:
   mysql:
     build: ./mysql
+    container_name: mysql_container
+    ports:
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./mysql/initialize.sql:/docker-entrypoint-initdb.d/initialize.sql
+      # initialize.sql の場所（./mysql/initialize.sql にある想定です）
+      - ./initialize.sql:/docker-entrypoint-initdb.d/initialize.sql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 'p@ssword'
+      MYSQL_DATABASE: 'test_db'
+      MYSQL_USER: 'data_user'
+      MYSQL_PASSWORD: 'data'
 
   phpmyadmin:
     depends_on:

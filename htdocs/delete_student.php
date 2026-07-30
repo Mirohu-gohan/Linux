@@ -1,8 +1,5 @@
 <?php
-// データベースへ接続するために必要な情報
-// ホストはDBコンテナ
 $host = 'mysql';
-// mysql接続用のユーザー
 $username = 'data_user';
 $password = 'data';
 $database = 'test_db';
@@ -15,7 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $conn = new PDO("mysql:host=$host;dbname=$database;charset=utf8mb4", $username, $password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            // 不正なクエリ（SQLインジェクション）を防ぐためプリペアドステートメントを使用
             $sql = "DELETE FROM students WHERE student_id = :student_id";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':student_id', $student_id_to_delete, PDO::PARAM_INT);
@@ -28,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
         } catch(PDOException $e) {
-            echo "delete FAILE: " . $e->getMessage();
+            echo "delete FAILED: " . $e->getMessage();
         } finally {
             $conn = null;
         }

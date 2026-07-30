@@ -8,4 +8,4 @@ ENV TZ Asia/Tokyo
 
 COPY ./my.cnf /etc/mysql/conf.d/my.cnf
 
-COPY ./initialize.sql /root/
+COPY ./initialize.sql /docker-entrypoint-initdb.d/
