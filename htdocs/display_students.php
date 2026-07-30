@@ -2,7 +2,7 @@
 $host = 'mysql';
 $username = 'data_user';
 $password = 'data';
-$database = 'test_db';
+$database = 'data_master';
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$database;charset=utf8mb4", $username, $password);

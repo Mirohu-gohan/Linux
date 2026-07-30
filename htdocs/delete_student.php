@@ -2,7 +2,7 @@
 $host = 'mysql';
 $username = 'data_user';
 $password = 'data';
-$database = 'test_db';
+$database = 'data_master';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['student_id']) && is_numeric($_POST['student_id'])) {

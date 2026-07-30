@@ -8,8 +8,7 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-      # initialize.sql の場所（./mysql/initialize.sql にある想定です）
-      - ./initialize.sql:/docker-entrypoint-initdb.d/initialize.sql
+      - ./mysql/initialize.sql:/docker-entrypoint-initdb.d/initialize.sql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 'p@ssword'

@@ -45,3 +45,6 @@ insert into classes (class_id, class_name) values (1, 'Programmer Class');
 insert into classes (class_id, class_name) values (2, 'Designer Class');
 
 insert into students (student_id, student_name, class_id) values (5, 'Takagi', 3);
+
+GRANT ALL PRIVILEGES ON *.* TO 'data_user'@'%';
+FLUSH PRIVILEGES;
