@@ -24,7 +24,7 @@ services:
       PMA_HOST: mysql
     restart: always
     ports:
-      - "8080:80"
+      - "8081:80" # ★ 8080 から 8081 に変更して重複を回避
 
   php-apache:
     build: ./php
@@ -35,6 +35,16 @@ services:
       - "80:80"
     depends_on:
       - mysql
+
+  websocket-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.websocket-server
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    restart: always # ★ networksの行を削除（自動的に全員と同じネットワークに繋がります）
 
   openssh-server:
     image: linuxserver/openssh-server:version-9.6_p1-r0

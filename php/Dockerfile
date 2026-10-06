@@ -1,9 +1,14 @@
 FROM php:7.3-apache
 COPY ./php.ini /usr/local/etc/php/
-RUN apt-get update \
-  && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
-  && docker-php-ext-install pdo_mysql mysqli mbstring gd iconv
-
+RUN sed -i '/debian-security/d' /etc/apt/sources.list \
+    && sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list \
+    && sed -i 's/security.debian.org/archive.debian.org/g' /etc/apt/sources.list \
+    && apt-get update -o Acquire::Check-Valid-Until=false \
+    && apt-get install -y --no-install-recommends \
+       libfreetype6-dev \
+       libjpeg62-turbo-dev \
+       libpng-dev \
+    && docker-php-ext-install pdo_mysql mysqli mbstring gd iconv
   RUN apt-get install -y vim
 
 RUN apt-get update && apt-get install -y default-mysql-client

@@ -2,8 +2,46 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
+    <title>WebSocketテスト</title>
   </head>
   <body>
-    <p>Hello World!!</p>
+    <h1>Hello World!!</h1>
+
+    <!-- メッセージ表示エリア -->
+    <div id="messages"></div>
+
+    <!-- 入力フォームと送信ボタン -->
+    <input type="text" id="messageInput" placeholder="メッセージを入力...">
+    <button id="sendButton">送信</button>
+
+    <script>
+      const messagesDiv = document.getElementById('messages');
+      const messageInput = document.getElementById('messageInput');
+      const sendButton = document.getElementById('sendButton');
+
+      // 1. WebSocketサーバー（8080ポート）へ接続
+      const socket = new WebSocket('ws://localhost:8080');
+
+      // 2. 接続確立時の処理
+      socket.onopen = function(event) {
+          console.log('webSocket接続が確立されました。');
+          messagesDiv.innerHTML += '<p><strong>[システム]</strong> 接続されました。</p>';
+      };
+
+      // 3. サーバーからメッセージを受信した時の処理
+      socket.onmessage = function(event) {
+          messagesDiv.innerHTML += '<p><strong>[相手/サーバー]</strong> ' + event.data + '</p>';
+      };
+
+      // 4. 送信ボタンを押した時の処理
+      sendButton.addEventListener('click', function() {
+          const message = messageInput.value;
+          if (message) {
+              socket.send(message); // サーバーへメッセージを送信
+              messagesDiv.innerHTML += '<p><strong>[自分]</strong> ' + message + '</p>';
+              messageInput.value = ''; // 入力欄をクリア
+          }
+      });
+    </script>
   </body>
-</html>docker-compose exec php-apache bash
+</html>
